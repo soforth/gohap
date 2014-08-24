@@ -1,0 +1,316 @@
+
+state 0
+	$accept: .input $end 
+	input: .    (1)
+
+	.  reduce 1 (src line 21)
+
+	input  goto 1
+
+state 1
+	$accept:  input.$end 
+	input:  input.stuff 
+
+	$end  accept
+	DEF_FORM  shift 3
+	ASSIGN  shift 5
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	}  shift 4
+	(  shift 10
+	.  error
+
+	stuff  goto 2
+	expr  goto 6
+	atom  goto 7
+
+state 2
+	input:  input stuff.    (2)
+
+	.  reduce 2 (src line 22)
+
+
+state 3
+	stuff:  DEF_FORM.    (3)
+
+	.  reduce 3 (src line 24)
+
+
+state 4
+	stuff:  }.    (4)
+
+	.  reduce 4 (src line 25)
+
+
+state 5
+	stuff:  ASSIGN.    (5)
+
+	.  reduce 5 (src line 26)
+
+
+state 6
+	stuff:  expr.    (6)
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+
+	+  shift 14
+	-  shift 15
+	*  shift 16
+	/  shift 17
+	.  reduce 6 (src line 27)
+
+
+state 7
+	expr:  atom.    (7)
+
+	.  reduce 7 (src line 29)
+
+
+state 8
+	atom:  MONEY.    (12)
+
+	.  reduce 12 (src line 35)
+
+
+state 9
+	atom:  ID.    (13)
+
+	.  reduce 13 (src line 36)
+
+
+state 10
+	atom:  (.expr ) 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 18
+	atom  goto 7
+
+state 11
+	atom:  XREF.    (15)
+
+	.  reduce 15 (src line 38)
+
+
+state 12
+	atom:  FUNC.arglist ) 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 20
+	atom  goto 7
+	arglist  goto 19
+
+state 13
+	atom:  FRAC.    (17)
+
+	.  reduce 17 (src line 40)
+
+
+state 14
+	expr:  expr +.expr 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 21
+	atom  goto 7
+
+state 15
+	expr:  expr -.expr 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 22
+	atom  goto 7
+
+state 16
+	expr:  expr *.expr 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 23
+	atom  goto 7
+
+state 17
+	expr:  expr /.expr 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 24
+	atom  goto 7
+
+state 18
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+	atom:  ( expr.) 
+
+	+  shift 14
+	-  shift 15
+	*  shift 16
+	/  shift 17
+	)  shift 25
+	.  error
+
+
+state 19
+	atom:  FUNC arglist.) 
+	arglist:  arglist., expr 
+
+	)  shift 26
+	,  shift 27
+	.  error
+
+
+state 20
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+	arglist:  expr.    (18)
+
+	+  shift 14
+	-  shift 15
+	*  shift 16
+	/  shift 17
+	.  reduce 18 (src line 42)
+
+
+state 21
+	expr:  expr.+ expr 
+	expr:  expr + expr.    (8)
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+
+	*  shift 16
+	/  shift 17
+	.  reduce 8 (src line 30)
+
+
+state 22
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr - expr.    (9)
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+
+	*  shift 16
+	/  shift 17
+	.  reduce 9 (src line 31)
+
+
+state 23
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr * expr.    (10)
+	expr:  expr./ expr 
+
+	.  reduce 10 (src line 32)
+
+
+state 24
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+	expr:  expr / expr.    (11)
+
+	.  reduce 11 (src line 33)
+
+
+state 25
+	atom:  ( expr ).    (14)
+
+	.  reduce 14 (src line 37)
+
+
+state 26
+	atom:  FUNC arglist ).    (16)
+
+	.  reduce 16 (src line 39)
+
+
+state 27
+	arglist:  arglist ,.expr 
+
+	ID  shift 9
+	MONEY  shift 8
+	FRAC  shift 13
+	XREF  shift 11
+	FUNC  shift 12
+	(  shift 10
+	.  error
+
+	expr  goto 28
+	atom  goto 7
+
+state 28
+	expr:  expr.+ expr 
+	expr:  expr.- expr 
+	expr:  expr.* expr 
+	expr:  expr./ expr 
+	arglist:  arglist , expr.    (19)
+
+	+  shift 14
+	-  shift 15
+	*  shift 16
+	/  shift 17
+	.  reduce 19 (src line 43)
+
+
+18 terminals, 6 nonterminals
+20 grammar rules, 29/2000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+55 working sets used
+memory: parser 18/30000
+18 extra closures
+74 shift entries, 1 exceptions
+12 goto entries
+7 entries saved by goto default
+Optimizer space used: output 43/30000
+43 table entries, 3 zero
+maximum spread: 18, maximum offset: 27

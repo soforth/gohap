@@ -1,0 +1,375 @@
+
+state 0
+	$accept: .start $end 
+	grammer: .    (5)
+
+	LPAREN  shift 7
+	DEFAULT  shift 4
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  reduce 5 (src line 36)
+
+	grammer  goto 2
+	expr  goto 3
+	term  goto 5
+	factor  goto 6
+	fun  goto 11
+	start  goto 1
+
+state 1
+	$accept:  start.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	start:  grammer.    (1)
+
+	.  reduce 1 (src line 32)
+
+
+state 3
+	grammer:  expr.GET NUM grammer 
+	grammer:  expr.grammer 
+	expr:  expr.LAND term 
+	expr:  expr.LOR term 
+	grammer: .    (5)
+
+	LPAREN  shift 7
+	LAND  shift 15
+	LOR  shift 16
+	GET  shift 13
+	DEFAULT  shift 4
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  reduce 5 (src line 36)
+
+	grammer  goto 14
+	expr  goto 3
+	term  goto 5
+	factor  goto 6
+	fun  goto 11
+
+state 4
+	grammer:  DEFAULT.GET NUM grammer 
+
+	GET  shift 17
+	.  error
+
+
+state 5
+	expr:  term.    (8)
+
+	.  reduce 8 (src line 40)
+
+
+state 6
+	term:  factor.CONTAIN LPAREN list RPAREN 
+	term:  factor.CMP factor 
+
+	CMP  shift 19
+	CONTAIN  shift 18
+	.  error
+
+
+state 7
+	term:  LPAREN.expr RPAREN 
+
+	LPAREN  shift 7
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	expr  goto 20
+	term  goto 5
+	factor  goto 6
+	fun  goto 11
+
+state 8
+	factor:  VAR.    (12)
+
+	.  reduce 12 (src line 46)
+
+
+state 9
+	factor:  STR.    (13)
+
+	.  reduce 13 (src line 47)
+
+
+state 10
+	factor:  NUM.    (14)
+
+	.  reduce 14 (src line 48)
+
+
+state 11
+	factor:  fun.    (15)
+
+	.  reduce 15 (src line 49)
+
+
+state 12
+	fun:  FUNC.LPAREN list RPAREN 
+	fun:  FUNC.LPAREN RPAREN 
+
+	LPAREN  shift 21
+	.  error
+
+
+state 13
+	grammer:  expr GET.NUM grammer 
+
+	NUM  shift 22
+	.  error
+
+
+state 14
+	grammer:  expr grammer.    (4)
+
+	.  reduce 4 (src line 35)
+
+
+state 15
+	expr:  expr LAND.term 
+
+	LPAREN  shift 7
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	term  goto 23
+	factor  goto 6
+	fun  goto 11
+
+state 16
+	expr:  expr LOR.term 
+
+	LPAREN  shift 7
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	term  goto 24
+	factor  goto 6
+	fun  goto 11
+
+state 17
+	grammer:  DEFAULT GET.NUM grammer 
+
+	NUM  shift 25
+	.  error
+
+
+state 18
+	term:  factor CONTAIN.LPAREN list RPAREN 
+
+	LPAREN  shift 26
+	.  error
+
+
+state 19
+	term:  factor CMP.factor 
+
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	factor  goto 27
+	fun  goto 11
+
+state 20
+	expr:  expr.LAND term 
+	expr:  expr.LOR term 
+	term:  LPAREN expr.RPAREN 
+
+	RPAREN  shift 28
+	LAND  shift 15
+	LOR  shift 16
+	.  error
+
+
+state 21
+	fun:  FUNC LPAREN.list RPAREN 
+	fun:  FUNC LPAREN.RPAREN 
+
+	RPAREN  shift 30
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	factor  goto 31
+	fun  goto 11
+	list  goto 29
+
+state 22
+	grammer:  expr GET NUM.grammer 
+	grammer: .    (5)
+
+	LPAREN  shift 7
+	DEFAULT  shift 4
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  reduce 5 (src line 36)
+
+	grammer  goto 32
+	expr  goto 3
+	term  goto 5
+	factor  goto 6
+	fun  goto 11
+
+state 23
+	expr:  expr LAND term.    (6)
+
+	.  reduce 6 (src line 38)
+
+
+state 24
+	expr:  expr LOR term.    (7)
+
+	.  reduce 7 (src line 39)
+
+
+state 25
+	grammer:  DEFAULT GET NUM.grammer 
+	grammer: .    (5)
+
+	LPAREN  shift 7
+	DEFAULT  shift 4
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  reduce 5 (src line 36)
+
+	grammer  goto 33
+	expr  goto 3
+	term  goto 5
+	factor  goto 6
+	fun  goto 11
+
+state 26
+	term:  factor CONTAIN LPAREN.list RPAREN 
+
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	factor  goto 31
+	fun  goto 11
+	list  goto 34
+
+state 27
+	term:  factor CMP factor.    (10)
+
+	.  reduce 10 (src line 43)
+
+
+state 28
+	term:  LPAREN expr RPAREN.    (11)
+
+	.  reduce 11 (src line 44)
+
+
+state 29
+	fun:  FUNC LPAREN list.RPAREN 
+
+	RPAREN  shift 35
+	.  error
+
+
+state 30
+	fun:  FUNC LPAREN RPAREN.    (19)
+
+	.  reduce 19 (src line 55)
+
+
+state 31
+	list:  factor.    (16)
+	list:  factor.COMMA list 
+
+	COMMA  shift 36
+	.  reduce 16 (src line 51)
+
+
+state 32
+	grammer:  expr GET NUM grammer.    (2)
+
+	.  reduce 2 (src line 33)
+
+
+state 33
+	grammer:  DEFAULT GET NUM grammer.    (3)
+
+	.  reduce 3 (src line 34)
+
+
+state 34
+	term:  factor CONTAIN LPAREN list.RPAREN 
+
+	RPAREN  shift 37
+	.  error
+
+
+state 35
+	fun:  FUNC LPAREN list RPAREN.    (18)
+
+	.  reduce 18 (src line 54)
+
+
+state 36
+	list:  factor COMMA.list 
+
+	VAR  shift 8
+	STR  shift 9
+	NUM  shift 10
+	FUNC  shift 12
+	.  error
+
+	factor  goto 31
+	fun  goto 11
+	list  goto 38
+
+state 37
+	term:  factor CONTAIN LPAREN list RPAREN.    (9)
+
+	.  reduce 9 (src line 42)
+
+
+state 38
+	list:  factor COMMA list.    (17)
+
+	.  reduce 17 (src line 52)
+
+
+16 terminals, 8 nonterminals
+20 grammar rules, 39/2000 states
+0 shift/reduce, 0 reduce/reduce conflicts reported
+57 working sets used
+memory: parser 42/30000
+24 extra closures
+72 shift entries, 1 exceptions
+19 goto entries
+23 entries saved by goto default
+Optimizer space used: output 61/30000
+61 table entries, 0 zero
+maximum spread: 16, maximum offset: 36

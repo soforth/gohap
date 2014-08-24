@@ -1,0 +1,31 @@
+/@/  { lval.fn = int(IN); return CONTAIN; }
+/!@/ { lval.fn = int(NI); return CONTAIN; }
+/>/  { lval.fn = int(GT); return CMP; }
+/</  { lval.fn = int(LT); return CMP; }
+/>=/ { lval.fn = int(GE); return CMP; }
+/<=/ { lval.fn = int(LE); return CMP; }
+/==/ { lval.fn = int(EQ); return CMP; }
+/!=/ { lval.fn = int(NE); return CMP; }
+/#/  { lval.fn = int(MA); return CMP; }
+/!#/ { lval.fn = int(NM); return CMP; }
+/\(/  { return LPAREN; }
+/\)/  { return RPAREN; }
+/,/   { return COMMA; }
+/&&/  { return LAND; }
+/\|\|/  { return LOR; }
+/=>/  { return GET; }
+/default/ { return DEFAULT; }
+/len/   { lval.fn = int(LEN); return FUNC; }
+/md5/   { lval.fn = int(MD5); return FUNC; }
+/count/ { lval.fn = int(COUNT); return FUNC; }
+/atoi/  { lval.fn = int(ATOI); return FUNC; }
+/itoa/  { lval.fn = int(ITOA); return FUNC; }
+/'[^']*'/ { lval.str = yylex.Text(); lval.str = lval.str[1:len(lval.str)-1]; return STR; }
+/[_a-zA-Z][_a-zA-Z0-9]*/ { lval.str = yylex.Text(); return VAR; }
+/-?[0-9]+(\.[0-9]*)*/ { f, _ := strconv.ParseFloat(yylex.Text(), 64); lval.dval = f; return NUM; }
+/\/\/.*\n/ { }
+/[ \t\n;]/ { }
+/./  { fmt.Println("Lexer: invalid charactor", yylex.Text()); }
+// 
+package filter 
+import ("fmt";"strconv")

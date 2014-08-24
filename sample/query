@@ -1,0 +1,6 @@
+//FORMAT: expect_value%filter_rule%symbol_input
+//===========================================
+
+1%atoi(x) > 10 &&( y =='abcd'|| atoi(z) == 9)%x=11&y=abc&z=9
+0%atoi(x) > 10 &&( y =='abcd'|| atoi(z) == 9)%x=11&y=abc&z=10
+1%mq=='testmq' =>1%mq=testmq&mac=55544&bootid=3456&ufa=false

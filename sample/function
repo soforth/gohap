@@ -1,0 +1,19 @@
+//FORMAT: expect_value%filter_rule%symbol_input
+//===========================================
+
+1%count() == 2%{"x":100,"y":10}
+1%count(x,y) == 2%{"x":100,"y":10}
+1%count(x) == 2%{"x":100,"y":10}
+1%len(x) == 3&&len(y)==2%{"x":"100","y":"10"}
+1%len(x,y) == 3&&len(y)==2%{"x":"100","y":"10"}
+0%len(x) == 3&&len('str')==2%{"x":"100","y":"10"}
+0%atoi(x) == 3&&len('str')==2%{"x":"100","y":"10"}
+0%atoi('3') == 3&&len('str')==2%{"x":"100","y":"10"}
+0%itoa(x) == '100'&&len('str')==2%{"x":100,"y":"10"}
+0%itoa(x,y) == '100'&&len('str')==2%{"x":100,"y":"10"}
+1%md5(x)=='4131bfb2bf25f5d9ef86ff9bf53e0055'%{"x":"justhechuang@163.com"}
+0%md5(x)!='4131bfb2bf25f5d9ef86ff9bf53e0055'%{"x":"justhechuang@163.com"}
+1%itoa(len(x))#'2.*'%{"x":"xx"}
+3%itoa(len(x))#'2.*'=>3%{"x":"xx"}
+1%itoa(3)#'3.*'%{"x":1}
+0%itoa(x) == 100.00&&len('str')==3%{"x":100,"y":"10"}
